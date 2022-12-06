@@ -63,11 +63,15 @@ developing your own process.
 - Add a new toy when the toy form is submitted
 
   - How I debugged:
-
+ i. I got error `500 (Internal server error)`. I had to look at the server side.
 - Update the number of likes for a toy
 
   - How I debugged:
+  ii. I found `"NameError (uninitialized constant ToysController::Toys):"`. This says that a constant has been used incorrectly in the "create" action.
 
 - Donate a toy to Goodwill (and delete it from our database)
 
   - How I debugged:
+  i. On clicking "donate a toy to goodwill", I got the `error; 404 (Not Found)`. With this error, I knew the reasons could be; (1) the object with that id doesn't exist in the database, (2) we are sending the wrong id, (3) we haven't implemented the routes to handle the delete request, or (4) the actual method/action in the controllers is using a different id from what is sent to try to delete the object, and the object with that id doesn't exist.
+
+   ii. The destroy action was defined in the controllers but the route that would route delete request to it was not defined. Changed the line from `resources :toys, only: [:index, :create, :update]` to `resources :toys, only: [:index, :create, :update, :destroy]`
